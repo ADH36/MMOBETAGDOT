@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3b8ykwq7xaij"]
+
+[ext_resource type="Script" path="res://scripts/MainGame.gd" id="1_main"]
+[ext_resource type="PackedScene" uid="uid://do5m0gj7sxavm" path="res://scenes/LoginUI.tscn" id="2_login"]
+[ext_resource type="PackedScene" uid="uid://c7dvbq8jmyb4n" path="res://scenes/GameWorld.tscn" id="3_world"]
+[ext_resource type="PackedScene" uid="uid://cjx2dn5yqh4kf" path="res://scenes/ChatUI.tscn" id="4_chat"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_main")
+
+[node name="LoginUI" parent="." instance=ExtResource("2_login")]
+
+[node name="GameWorld" parent="." instance=ExtResource("3_world")]
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="ChatUI" parent="UILayer" instance=ExtResource("4_chat")]
