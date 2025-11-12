@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MMO Game - Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 MMO Game Server - Admin Panel</h1>
+            <div class="server-status">
+                <span class="status-indicator" id="statusIndicator">●</span>
+                <span id="serverStatus">Connecting...</span>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <!-- Stats Section -->
+            <div class="card stats-card">
+                <h2>📊 Server Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">Current Players</div>
+                        <div class="stat-value" id="currentPlayers">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Total Connections</div>
+                        <div class="stat-value" id="totalConnections">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Messages/sec</div>
+                        <div class="stat-value" id="messagesPerSec">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Uptime</div>
+                        <div class="stat-value" id="uptime">0s</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Players Section -->
+            <div class="card players-card">
+                <h2>👥 Online Players</h2>
+                <div class="players-list" id="playersList">
+                    <p class="no-players">No players online</p>
+                </div>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="card control-card">
+                <h2>🎛️ Control Panel</h2>
+                
+                <div class="control-section">
+                    <h3>Broadcast Message</h3>
+                    <div class="input-group">
+                        <input type="text" id="broadcastInput" placeholder="Enter message to broadcast...">
+                        <button onclick="broadcastMessage()" class="btn btn-primary">Send Broadcast</button>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <h3>Player Management</h3>
+                    <div class="input-group">
+                        <input type="text" id="kickPlayerId" placeholder="Enter player ID to kick...">
+                        <button onclick="kickPlayer()" class="btn btn-danger">Kick Player</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat History -->
+            <div class="card chat-card">
+                <h2>💬 Chat History</h2>
+                <div class="chat-history" id="chatHistory">
+                    <p class="no-messages">No chat messages yet</p>
+                </div>
+                <button onclick="loadChatHistory()" class="btn btn-secondary">Refresh Chat</button>
+            </div>
+
+            <!-- Game Map Visualization -->
+            <div class="card map-card">
+                <h2>🗺️ Game World Map</h2>
+                <canvas id="gameMap" width="600" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
