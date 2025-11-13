@@ -11,13 +11,14 @@ func _ready():
 	NetworkManager.player_left.connect(_on_player_left)
 	NetworkManager.player_moved.connect(_on_player_moved)
 
-func spawn_local_player(player_name: String):
+func spawn_local_player(char_data: CharacterData):
 	if local_player:
 		return
 	
 	local_player = player_scene.instantiate()
 	local_player.is_local_player = true
-	local_player.set_player_name(player_name)
+	local_player.set_player_name(char_data.character_name)
+	local_player.update_appearance(char_data)
 	local_player.global_position = Vector2(640, 360)  # Center of screen
 	players_container.add_child(local_player)
 
