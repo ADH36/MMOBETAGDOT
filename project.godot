@@ -13,7 +13,7 @@ config_version=5
 config/name="MMO 2D Game"
 config/description="A 2D MMORPG built with Godot 4.5.1"
 run/main_scene="res://scenes/Main.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
@@ -56,5 +56,4 @@ chat={
 
 [rendering]
 
-renderer/rendering_method="forward_plus"
 textures/canvas_textures/default_texture_filter=0
