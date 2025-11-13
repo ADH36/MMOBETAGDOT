@@ -5,10 +5,17 @@ A multiplayer 2D MMORPG built with Godot Engine 4.5.1 and Node.js server with re
 ## 🎮 Features
 
 ### Client (Godot 4.5.1)
+- **Character System**: Create and customize your own 2D character
+- **Main Menu**: Navigate between New Game, Load Character, and Exit
+- **Character Creation**: 
+  - Choose from 4 classes (Warrior, Mage, Rogue, Archer)
+  - Customize appearance (skin tone, hair color)
+  - Live character preview
+  - Save and load character data
 - **Real-time Multiplayer**: Multiple players can join and interact in the same world
 - **Player Movement**: WASD or Arrow keys for character movement
 - **Real-time Chat**: Press Enter to open chat and communicate with other players
-- **Player Synchronization**: See other players moving in real-time
+- **Player Synchronization**: See other players moving in real-time with their custom appearances
 - **Modern UI**: Clean login screen and in-game HUD
 
 ### Server (Node.js)
@@ -75,8 +82,13 @@ http://localhost:3000
 1. Open Godot Engine 4.5.1
 2. Click "Import" and select the `project.godot` file in the repository root
 3. Once imported, click "Run" (F5) to start the game
-4. Enter a username and click "Connect"
-5. You should now be in the game world!
+4. You'll see the Main Menu with options:
+   - **New Game**: Create a new character
+   - **Load Character**: Load a previously saved character
+   - **Exit**: Close the game
+5. Create or load your character
+6. Enter server connection details and connect
+7. You should now be in the game world with your custom character!
 
 ## 🎯 How to Play
 
@@ -87,30 +99,47 @@ http://localhost:3000
 - **D / Right Arrow**: Move right
 - **Enter**: Open/close chat
 
+### Character Creation
+1. **Choose Your Class**: Select from Warrior, Mage, Rogue, or Archer
+   - Each class has unique stats and appearance
+2. **Customize Appearance**: 
+   - Adjust skin tone (4 options)
+   - Change hair color (6 options)
+3. **Preview Your Character**: See your character in real-time as you customize
+4. **Save Your Character**: Characters are automatically saved and can be loaded later
+
 ### Multiplayer
 1. Start the server first
 2. Launch multiple game clients
-3. Each client can connect with a different username
-4. All players will see each other moving in real-time
+3. Each client can create or load their character
+4. Connect to the server with different usernames
+5. All players will see each other moving in real-time with their custom appearances
 
 ## 🏗️ Project Structure
 
 ```
 MMOBETAGDOT/
 ├── project.godot          # Godot project configuration
-├── scenes/                # Godot scene files
-│   ├── Main.tscn         # Main game scene
-│   ├── Player.tscn       # Player character scene
-│   ├── GameWorld.tscn    # Game world scene
-│   ├── LoginUI.tscn      # Login interface
-│   └── ChatUI.tscn       # Chat interface
-├── scripts/               # GDScript files
-│   ├── MainGame.gd       # Main game controller
-│   ├── NetworkManager.gd # WebSocket client manager
-│   ├── Player.gd         # Player controller
-│   ├── GameWorld.gd      # World manager
-│   ├── LoginUI.gd        # Login UI controller
-│   └── ChatUI.gd         # Chat UI controller
+├── scenes/                    # Godot scene files
+│   ├── Main.tscn             # Main game scene
+│   ├── MainMenu.tscn         # Main menu interface
+│   ├── CharacterCreation.tscn # Character creation screen
+│   ├── LoadCharacter.tscn    # Load character screen
+│   ├── Player.tscn           # Player character scene
+│   ├── GameWorld.tscn        # Game world scene
+│   ├── LoginUI.tscn          # Login interface
+│   └── ChatUI.tscn           # Chat interface
+├── scripts/                   # GDScript files
+│   ├── MainGame.gd           # Main game controller
+│   ├── MainMenu.gd           # Main menu controller
+│   ├── CharacterCreation.gd  # Character creation controller
+│   ├── LoadCharacter.gd      # Load character controller
+│   ├── CharacterData.gd      # Character data resource
+│   ├── NetworkManager.gd     # WebSocket client manager
+│   ├── Player.gd             # Player controller
+│   ├── GameWorld.gd          # World manager
+│   ├── LoginUI.gd            # Login UI controller
+│   └── ChatUI.gd             # Chat UI controller
 ├── server/                # Node.js server
 │   ├── server.js         # Main server file
 │   ├── database.js       # Database manager
@@ -145,6 +174,30 @@ For remote server connections, change to:
 ```gdscript
 var server_url = "ws://your-server-ip:3000"
 ```
+
+### Character System
+
+The game features a comprehensive character system with:
+
+#### Character Classes
+- **Warrior**: High health (150) and strength (15). Tank class for close combat.
+- **Mage**: High mana (100) and intelligence (15). Caster class for magic.
+- **Rogue**: High agility (15) and speed. Stealth and critical damage specialist.
+- **Archer**: Balanced stats. Ranged combat specialist.
+
+#### Character Customization
+- **4 Skin Tones**: From light to dark
+- **6 Hair Colors**: Black, Brown, Blonde, Red, White, Gray
+- **Class-based Outfit Colors**: Each class has a unique color scheme
+
+#### Save System
+Characters are saved locally in the user data directory:
+- Up to 3 save slots available
+- Each save stores: name, class, appearance, stats, and timestamps
+- Load any saved character to continue playing
+- Delete characters you no longer need
+
+For detailed information, see [CHARACTER_SYSTEM.md](CHARACTER_SYSTEM.md)
 
 ## 📡 API Endpoints
 
