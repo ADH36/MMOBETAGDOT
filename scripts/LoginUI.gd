@@ -1,7 +1,7 @@
 extends Control
 
 @onready var username_input = $Panel/VBoxContainer/UsernameInput
-@ontml:parameter name="server_input = $Panel/VBoxContainer/ServerInput
+@onready var server_input = $Panel/VBoxContainer/ServerInput
 @onready var connect_button = $Panel/VBoxContainer/ConnectButton
 @onready var status_label = $Panel/VBoxContainer/StatusLabel
 
