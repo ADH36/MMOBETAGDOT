@@ -4,15 +4,7 @@ extends Node
 @onready var game_world = $GameWorld
 @onready var ui_layer = $UILayer
 
-var network_manager = null
-
 func _ready():
-	# Add NetworkManager as autoload singleton
-	if not has_node("/root/NetworkManager"):
-		network_manager = load("res://scripts/NetworkManager.gd").new()
-		network_manager.name = "NetworkManager"
-		get_tree().root.add_child(network_manager)
-	
 	# Hide game world initially
 	game_world.visible = false
 	ui_layer.visible = false
