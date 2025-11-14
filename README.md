@@ -12,6 +12,28 @@ A multiplayer 2D MMORPG built with Godot Engine 4.5.1 and Node.js server with re
   - Customize appearance (skin tone, hair color)
   - Live character preview
   - Save and load character data
+- **Multiple Worlds**: Explore different environments
+  - Jungle world with trees and bushes
+  - Village world with houses and fences
+  - Toggle between worlds with Tab key
+- **Combat System**: 
+  - Basic attack with cooldown (Space key)
+  - Class-specific damage calculations
+  - Visual attack effects
+- **Skills System**:
+  - 2 unique skills per class
+  - Mana-based resource management
+  - Skill cooldowns and visual effects
+  - Skills cast with number keys (1, 2, 3)
+- **Skill Upgrades**:
+  - Level up skills from 1 to 5
+  - Increase damage and power
+  - Skill upgrade UI (PageUp key)
+- **Combat UI**:
+  - Health and mana bars
+  - Skill hotbar with cooldown indicators
+  - Real-time stat tracking
+- **Camera System**: Smooth camera following player
 - **Real-time Multiplayer**: Multiple players can join and interact in the same world
 - **Player Movement**: WASD or Arrow keys for character movement
 - **Real-time Chat**: Press Enter to open chat and communicate with other players
@@ -88,25 +110,76 @@ http://localhost:3000
    - **Exit**: Close the game
 5. Create or load your character
 6. Enter server connection details and connect
-7. You should now be in the game world with your custom character!
+7. You're now in the game world! Try out the combat system:
+   - Press **Space** to attack
+   - Press **1** or **2** to use skills
+   - Press **Tab** to switch between Jungle and Village worlds
+   - Press **PageUp** to open the skill upgrade menu
 
 ## 🎯 How to Play
 
 ### Controls
+
+#### Movement
 - **W / Up Arrow**: Move up
 - **S / Down Arrow**: Move down
 - **A / Left Arrow**: Move left
 - **D / Right Arrow**: Move right
+
+#### Combat
+- **Space**: Basic attack
+- **1**: Use Skill 1
+- **2**: Use Skill 2
+- **3**: Use Skill 3 (if available)
+
+#### Interface
 - **Enter**: Open/close chat
+- **Tab**: Toggle between Jungle and Village worlds
+- **PageUp**: Open/close Skill Upgrade menu
 
 ### Character Creation
 1. **Choose Your Class**: Select from Warrior, Mage, Rogue, or Archer
-   - Each class has unique stats and appearance
+   - Each class has unique stats, skills, and appearance
+   - **Warrior**: High health, strong melee attacks (Power Slash, Charge)
+   - **Mage**: High mana, powerful spells (Fireball, Ice Shard)
+   - **Rogue**: High agility, critical strikes (Backstab, Poison Dart)
+   - **Archer**: Balanced stats, ranged attacks (Multi-Shot, Explosive Arrow)
 2. **Customize Appearance**: 
    - Adjust skin tone (4 options)
    - Change hair color (6 options)
 3. **Preview Your Character**: See your character in real-time as you customize
 4. **Save Your Character**: Characters are automatically saved and can be loaded later
+
+### Combat System
+The game features a comprehensive combat system:
+
+1. **Basic Attacks**: Press Space to perform your class's basic attack
+   - Each class has different base damage
+   - Attacks have a 1-second cooldown
+   - Visual effects show when you attack
+
+2. **Skills**: Each class has 2 unique skills (keys 1-2)
+   - Skills cost mana to cast
+   - Each skill has its own cooldown
+   - Skills deal more damage than basic attacks
+   - Visual effects match the skill type
+
+3. **Resources**:
+   - **Health**: Your survivability (top bar)
+   - **Mana**: Resource for casting skills (bottom bar)
+   - Bars update in real-time as you fight
+
+4. **Skill Upgrades**: Press PageUp to open the upgrade menu
+   - Upgrade skills from level 1 to 5
+   - Higher levels = more damage
+   - Each upgrade costs skill points
+
+### Worlds
+Explore two different environments:
+- **Jungle**: Dense forest with trees and bushes
+- **Village**: Peaceful settlement with houses and fences
+- Press **Tab** to teleport between worlds
+- Each world has unique decorations and atmosphere
 
 ### Multiplayer
 1. Start the server first
@@ -128,16 +201,24 @@ MMOBETAGDOT/
 │   ├── Player.tscn           # Player character scene
 │   ├── GameWorld.tscn        # Game world scene
 │   ├── LoginUI.tscn          # Login interface
-│   └── ChatUI.tscn           # Chat interface
+│   ├── ChatUI.tscn           # Chat interface
+│   ├── CombatUI.tscn         # Combat UI (health, mana, skills)
+│   ├── SkillUpgradeUI.tscn   # Skill upgrade interface
+│   └── AttackEffect.tscn     # Visual effect for attacks/skills
 ├── scripts/                   # GDScript files
 │   ├── MainGame.gd           # Main game controller
 │   ├── MainMenu.gd           # Main menu controller
 │   ├── CharacterCreation.gd  # Character creation controller
 │   ├── LoadCharacter.gd      # Load character controller
-│   ├── CharacterData.gd      # Character data resource
+│   ├── CharacterData.gd      # Character data resource (with combat stats)
+│   ├── Skill.gd              # Skill resource class
 │   ├── NetworkManager.gd     # WebSocket client manager
-│   ├── Player.gd             # Player controller
-│   ├── GameWorld.gd          # World manager
+│   ├── Player.gd             # Player controller (with combat)
+│   ├── GameWorld.gd          # World manager (with world types)
+│   ├── WorldDecoration.gd    # World decoration generator
+│   ├── CombatUI.gd           # Combat UI controller
+│   ├── SkillUpgradeUI.gd     # Skill upgrade UI controller
+│   ├── AttackEffect.gd       # Visual effect controller
 │   ├── LoginUI.gd            # Login UI controller
 │   └── ChatUI.gd             # Chat UI controller
 ├── server/                # Node.js server
@@ -259,6 +340,9 @@ For issues and questions, please open an issue on GitHub.
 - [Godot Engine Documentation](https://docs.godotengine.org/)
 - [WebSocket Protocol](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
 - [Node.js Documentation](https://nodejs.org/docs/)
+- [Combat System Documentation](COMBAT_SYSTEM.md) - Detailed guide to combat, skills, and worlds
+- [Character System Documentation](CHARACTER_SYSTEM.md) - Character creation and customization
+- [Testing Guide](TESTING.md) - Comprehensive testing procedures
 
 ## 🌟 Acknowledgments
 
