@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c7dvbq8jmyb4n"]
+[gd_scene load_steps=5 format=3 uid="uid://c7dvbq8jmyb4n"]
 
 [ext_resource type="Script" path="res://scripts/GameWorld.gd" id="1_world"]
 [ext_resource type="PackedScene" uid="uid://bg2wq8rmhu2rx" path="res://scenes/CombatUI.tscn" id="2_combat_ui"]
 [ext_resource type="PackedScene" uid="uid://cqdhp2yd0i3nu" path="res://scenes/SkillUpgradeUI.tscn" id="3_skill_upgrade"]
+[ext_resource type="PackedScene" uid="uid://bpqrx2yywnbhb" path="res://scenes/CurrencyUI.tscn" id="4_currency_ui"]
 
 [node name="GameWorld" type="Node2D"]
 script = ExtResource("1_world")
@@ -17,8 +18,14 @@ color = Color(0.15, 0.2, 0.15, 1)
 
 [node name="Decorations" type="Node2D" parent="."]
 
+[node name="Monsters" type="Node2D" parent="."]
+
+[node name="NPCs" type="Node2D" parent="."]
+
 [node name="Players" type="Node2D" parent="."]
 
 [node name="CombatUI" parent="." instance=ExtResource("2_combat_ui")]
 
 [node name="SkillUpgradeUI" parent="." instance=ExtResource("3_skill_upgrade")]
+
+[node name="CurrencyUI" parent="." instance=ExtResource("4_currency_ui")]

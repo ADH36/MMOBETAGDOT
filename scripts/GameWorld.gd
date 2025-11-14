@@ -8,7 +8,11 @@ enum WorldType { JUNGLE, VILLAGE }
 @onready var combat_ui = $CombatUI
 @onready var skill_upgrade_ui = $SkillUpgradeUI
 @onready var decorations_container = $Decorations
+@onready var monsters_container = $Monsters
+@onready var npcs_container = $NPCs
 var player_scene = preload("res://scenes/Player.tscn")
+var monster_scene = preload("res://scenes/Monster.tscn")
+var npc_scene = preload("res://scenes/NPC.tscn")
 var local_player = null
 var network_players = {}
 var current_world: WorldType = WorldType.JUNGLE
@@ -86,6 +90,12 @@ func _setup_world(world_type: WorldType):
 	if decorations:
 		decorations.queue_free()
 	
+	# Clear old monsters and NPCs
+	for child in monsters_container.get_children():
+		child.queue_free()
+	for child in npcs_container.get_children():
+		child.queue_free()
+	
 	# Load decoration script and create instance
 	var decoration_script = load("res://scripts/WorldDecoration.gd")
 	decorations = Node2D.new()
@@ -98,11 +108,81 @@ func _setup_world(world_type: WorldType):
 		WorldType.JUNGLE:
 			$Background.color = Color(0.1, 0.3, 0.1)  # Dark green for jungle
 			decorations.create_jungle_decorations(world_bounds)
+			spawn_jungle_entities()
 		WorldType.VILLAGE:
 			$Background.color = Color(0.6, 0.5, 0.3)  # Brown/tan for village
 			decorations.create_village_decorations(world_bounds)
+			spawn_village_entities()
 
 func change_world(world_type: WorldType):
 	"""Change to a different world"""
 	current_world = world_type
 	_setup_world(world_type)
+
+func spawn_jungle_entities():
+	"""Spawn monsters and NPCs for jungle world"""
+	# Spawn some slimes (basic monsters)
+	for i in range(5):
+		var monster = monster_scene.instantiate()
+		monster.monster_name = "Jungle Slime"
+		monster.monster_type = "basic"
+		monster.max_health = 50
+		monster.gold_drop_min = 2
+		monster.gold_drop_max = 8
+		monster.global_position = Vector2(
+			randf_range(100, 1180),
+			randf_range(100, 620)
+		)
+		monsters_container.add_child(monster)
+	
+	# Spawn an elite monster
+	var elite = monster_scene.instantiate()
+	elite.monster_name = "Forest Guardian"
+	elite.monster_type = "elite"
+	elite.max_health = 120
+	elite.attack_damage = 10
+	elite.gold_drop_min = 10
+	elite.gold_drop_max = 20
+	elite.global_position = Vector2(randf_range(300, 980), randf_range(200, 520))
+	monsters_container.add_child(elite)
+	
+	# Spawn an NPC
+	var npc = npc_scene.instantiate()
+	npc.npc_name = "Jungle Explorer"
+	npc.npc_type = "quest_giver"
+	npc.dialogue_text = "These jungles are full of dangerous creatures! Be careful out there, adventurer."
+	npc.global_position = Vector2(200, 200)
+	npcs_container.add_child(npc)
+
+func spawn_village_entities():
+	"""Spawn monsters and NPCs for village world"""
+	# Spawn some bandits (basic monsters)
+	for i in range(3):
+		var monster = monster_scene.instantiate()
+		monster.monster_name = "Bandit"
+		monster.monster_type = "basic"
+		monster.max_health = 60
+		monster.attack_damage = 7
+		monster.gold_drop_min = 5
+		monster.gold_drop_max = 12
+		monster.global_position = Vector2(
+			randf_range(100, 1180),
+			randf_range(100, 620)
+		)
+		monsters_container.add_child(monster)
+	
+	# Spawn merchant NPC
+	var merchant = npc_scene.instantiate()
+	merchant.npc_name = "Village Merchant"
+	merchant.npc_type = "merchant"
+	merchant.dialogue_text = "Welcome to my shop! I have wares if you have coin."
+	merchant.global_position = Vector2(300, 300)
+	npcs_container.add_child(merchant)
+	
+	# Spawn generic NPC
+	var villager = npc_scene.instantiate()
+	villager.npc_name = "Friendly Villager"
+	villager.npc_type = "generic"
+	villager.dialogue_text = "Nice weather we're having today!"
+	villager.global_position = Vector2(600, 400)
+	npcs_container.add_child(villager)
