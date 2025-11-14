@@ -17,6 +17,8 @@ func _ready():
 	if name_label:
 		name_label.text = player_name
 	_setup_default_appearance()
+	# Add to players group for monster AI targeting
+	add_to_group("players")
 
 func _physics_process(delta):
 	if is_local_player:
@@ -78,6 +80,15 @@ func perform_attack():
 	effect.setup(Color(1, 0.8, 0.2), 25.0)
 	get_parent().add_child(effect)
 	
+	# Check for monsters in attack range and damage them
+	var monsters = get_tree().get_nodes_in_group("monsters")
+	var attack_range = 60.0
+	for monster in monsters:
+		if monster and is_instance_valid(monster):
+			var distance = global_position.distance_to(monster.global_position)
+			if distance <= attack_range and monster.has_method("take_damage"):
+				monster.take_damage(character_data.get_attack_damage())
+	
 	print("Attack! Damage: ", character_data.get_attack_damage())
 
 func cast_skill(skill_index: int):
@@ -92,6 +103,15 @@ func cast_skill(skill_index: int):
 		effect.global_position = global_position + Vector2(40, 0)
 		effect.setup(skill.effect_color, skill.effect_size)
 		get_parent().add_child(effect)
+		
+		# Check for monsters in skill range and damage them
+		var monsters = get_tree().get_nodes_in_group("monsters")
+		var skill_range = 80.0
+		for monster in monsters:
+			if monster and is_instance_valid(monster):
+				var distance = global_position.distance_to(monster.global_position)
+				if distance <= skill_range and monster.has_method("take_damage"):
+					monster.take_damage(skill.get_damage())
 		
 		print("Cast ", skill.skill_name, "! Damage: ", skill.get_damage(), " Mana: ", character_data.current_mana)
 
@@ -118,6 +138,22 @@ func update_appearance(char_data: CharacterData):
 		hair_sprite.modulate = char_data.hair_color_value
 	if outfit_sprite:
 		outfit_sprite.modulate = char_data.outfit_color
+
+func take_damage(damage: int):
+	"""Player takes damage from monster"""
+	if not character_data:
+		return
+	
+	character_data.current_health -= damage
+	if character_data.current_health < 0:
+		character_data.current_health = 0
+	
+	print(player_name, " took ", damage, " damage! Health: ", character_data.current_health, "/", character_data.max_health)
+	
+	# Optional: Handle player death
+	if character_data.current_health <= 0:
+		print(player_name, " has been defeated!")
+		# Could implement respawn logic here
 
 func _setup_default_appearance():
 	"""Setup default appearance if no character data is provided"""

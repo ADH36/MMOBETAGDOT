@@ -33,6 +33,23 @@ A multiplayer 2D MMORPG built with Godot Engine 4.5.1 and Node.js server with re
   - Health and mana bars
   - Skill hotbar with cooldown indicators
   - Real-time stat tracking
+- **Currency System**: 🆕
+  - Gold (💰) - Free currency earned from defeating monsters
+  - Gems (💎) - Premium currency for future shop purchases
+  - Persistent currency that saves across sessions
+  - Real-time currency UI display
+- **Monster System**: 🆕
+  - AI-controlled monsters with detection and combat behavior
+  - Multiple monster types (basic, elite, boss)
+  - Monster hunting with gold rewards
+  - Auto-respawning monsters (10 second respawn timer)
+  - Different monsters per world (Jungle Slimes, Bandits, etc.)
+  - Visual health bars and damage feedback
+- **NPC System**: 🆕
+  - Interactive NPCs with wandering AI
+  - Three NPC types: Merchants, Quest Givers, and Generic NPCs
+  - Proximity-based interaction (press E to talk)
+  - World-specific NPCs with unique dialogues
 - **Camera System**: Smooth camera following player
 - **Real-time Multiplayer**: Multiple players can join and interact in the same world
 - **Player Movement**: WASD or Arrow keys for character movement
@@ -127,10 +144,14 @@ http://localhost:3000
 - **D / Right Arrow**: Move right
 
 #### Combat
-- **Space**: Basic attack
+- **Space**: Basic attack (attacks monsters in range)
 - **1**: Use Skill 1
 - **2**: Use Skill 2
 - **3**: Use Skill 3 (if available)
+
+#### Interaction
+- **E / Enter**: Interact with NPCs
+- Press when near an NPC to talk
 
 #### Interface
 - **Enter**: Open/close chat
@@ -151,18 +172,20 @@ http://localhost:3000
 4. **Save Your Character**: Characters are automatically saved and can be loaded later
 
 ### Combat System
-The game features a comprehensive combat system:
+The game features a comprehensive combat system with monster hunting:
 
 1. **Basic Attacks**: Press Space to perform your class's basic attack
    - Each class has different base damage
    - Attacks have a 1-second cooldown
    - Visual effects show when you attack
+   - Attacks hit monsters within 60 units range
 
 2. **Skills**: Each class has 2 unique skills (keys 1-2)
    - Skills cost mana to cast
    - Each skill has its own cooldown
    - Skills deal more damage than basic attacks
    - Visual effects match the skill type
+   - Skills hit monsters within 80 units range
 
 3. **Resources**:
    - **Health**: Your survivability (top bar)
@@ -172,6 +195,76 @@ The game features a comprehensive combat system:
 4. **Skill Upgrades**: Press PageUp to open the upgrade menu
    - Upgrade skills from level 1 to 5
    - Higher levels = more damage
+   - Each upgrade costs skill points
+
+### Monster Hunting System 🆕
+
+Hunt monsters to earn gold and test your combat skills:
+
+1. **Finding Monsters**: 
+   - Monsters spawn in each world
+   - Jungle: Slimes and Forest Guardian
+   - Village: Bandits
+   - Different monsters have different stats and rewards
+
+2. **Monster Behavior**:
+   - Monsters patrol and wander when idle
+   - Detect players within ~150 units
+   - Chase and attack players when detected
+   - Deal damage every 1.5 seconds when in range
+
+3. **Combat**:
+   - Attack monsters with Space or skills (1, 2)
+   - Monitor monster health bars (change color with health)
+   - Defeat monsters to earn gold
+   - Monsters respawn after 10 seconds
+
+4. **Rewards**:
+   - Each monster drops gold when defeated
+   - Basic monsters: 2-12 gold
+   - Elite monsters: 10-20 gold
+   - Gold is automatically added to your currency
+
+### Currency System 🆕
+
+Collect and manage two types of currency:
+
+1. **Gold (💰)** - Free Currency:
+   - Earned by defeating monsters
+   - Amount varies by monster type
+   - Used for future purchases and upgrades
+   - Displayed in top-right corner
+
+2. **Gems (💎)** - Premium Currency:
+   - For future shop purchases
+   - Rare and valuable
+   - Displayed in top-right corner
+
+3. **Currency Features**:
+   - Automatically saved across sessions
+   - Persistent between game sessions
+   - Real-time UI updates
+   - View current amounts anytime
+
+### NPC Interactions 🆕
+
+Talk to NPCs for quests, shopping, and lore:
+
+1. **Finding NPCs**:
+   - NPCs wander around the world
+   - Each world has unique NPCs
+   - Look for "[E] Talk" prompt when nearby
+
+2. **NPC Types**:
+   - **Merchants** (Purple): Future shop access
+   - **Quest Givers** (Gold): Future quest objectives
+   - **Villagers** (Blue-gray): Lore and flavor text
+
+3. **Interaction**:
+   - Approach an NPC (within ~50 units)
+   - Press E or Enter to talk
+   - Read dialogue in console (UI coming soon)
+   - Each NPC has unique dialogue
    - Each upgrade costs skill points
 
 ### Worlds
@@ -342,7 +435,9 @@ For issues and questions, please open an issue on GitHub.
 - [Node.js Documentation](https://nodejs.org/docs/)
 - [Combat System Documentation](COMBAT_SYSTEM.md) - Detailed guide to combat, skills, and worlds
 - [Character System Documentation](CHARACTER_SYSTEM.md) - Character creation and customization
+- [NPC & Monster System Documentation](NPC_MONSTER_SYSTEM.md) - 🆕 Complete guide to NPCs, monsters, hunting, and currency
 - [Testing Guide](TESTING.md) - Comprehensive testing procedures
+- [NPC & Monster Testing](TESTING_NPC_MONSTER.md) - 🆕 Testing guide for new features
 
 ## 🌟 Acknowledgments
 

@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 NetworkManager="*res://scripts/NetworkManager.gd"
+CurrencyManager="*res://scripts/CurrencyManager.gd"
 
 [display]
 
