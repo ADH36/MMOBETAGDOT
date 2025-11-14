@@ -5,6 +5,7 @@ const SPEED = 200.0
 var player_name = "Player"
 var is_local_player = false
 var character_data: CharacterData
+var attack_effect_scene = preload("res://scenes/AttackEffect.tscn")
 
 @onready var name_label = $NameLabel
 @onready var body_sprite = $Body
@@ -20,7 +21,13 @@ func _ready():
 func _physics_process(delta):
 	if is_local_player:
 		handle_input()
+		handle_combat_input()
 		move_and_slide()
+		
+		# Update cooldowns
+		if character_data:
+			character_data.update_attack_cooldown(delta)
+			character_data.update_skills_cooldown(delta)
 		
 		# Send position to server periodically
 		if Engine.get_physics_frames() % 5 == 0:  # Every 5 frames
@@ -40,6 +47,53 @@ func handle_input():
 	
 	input_vector = input_vector.normalized()
 	velocity = input_vector * SPEED
+
+func handle_combat_input():
+	"""Handle attack and skill inputs"""
+	if not character_data:
+		return
+	
+	# Basic attack
+	if Input.is_action_just_pressed("attack"):
+		perform_attack()
+	
+	# Skills
+	if Input.is_action_just_pressed("skill_1"):
+		cast_skill(0)
+	if Input.is_action_just_pressed("skill_2"):
+		cast_skill(1)
+	if Input.is_action_just_pressed("skill_3"):
+		cast_skill(2)
+
+func perform_attack():
+	"""Perform basic attack"""
+	if not character_data.is_attack_ready():
+		return
+	
+	character_data.start_attack_cooldown()
+	
+	# Create attack effect
+	var effect = attack_effect_scene.instantiate()
+	effect.global_position = global_position + Vector2(30, 0)  # In front of player
+	effect.setup(Color(1, 0.8, 0.2), 25.0)
+	get_parent().add_child(effect)
+	
+	print("Attack! Damage: ", character_data.get_attack_damage())
+
+func cast_skill(skill_index: int):
+	"""Cast a skill"""
+	if not character_data.can_cast_skill(skill_index):
+		return
+	
+	var skill = character_data.skills[skill_index]
+	if character_data.cast_skill(skill_index):
+		# Create skill effect
+		var effect = attack_effect_scene.instantiate()
+		effect.global_position = global_position + Vector2(40, 0)
+		effect.setup(skill.effect_color, skill.effect_size)
+		get_parent().add_child(effect)
+		
+		print("Cast ", skill.skill_name, "! Damage: ", skill.get_damage(), " Mana: ", character_data.current_mana)
 
 func set_player_name(new_name: String):
 	player_name = new_name

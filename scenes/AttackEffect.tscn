@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dq7xwvyl1mphs"]
+
+[ext_resource type="Script" path="res://scripts/AttackEffect.gd" id="1_effect"]
+
+[node name="AttackEffect" type="Node2D"]
+script = ExtResource("1_effect")
+
+[node name="Visual" type="ColorRect" parent="."]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+color = Color(1, 0.5, 0, 1)
