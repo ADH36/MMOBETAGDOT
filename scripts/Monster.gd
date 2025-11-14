@@ -36,6 +36,8 @@ func _ready():
 	update_health_bar()
 	_setup_appearance()
 	choose_random_patrol()
+	# Add to monsters group for easy access
+	add_to_group("monsters")
 
 func _physics_process(delta):
 	if is_dead:
