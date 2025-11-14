@@ -90,8 +90,8 @@ func _on_back_pressed():
 	emit_signal("back_pressed")
 
 func _on_class_selected(index: int):
-	var class_name = class_option_button.get_item_text(index)
-	character_data.character_class = class_name
+	var selected_class = class_option_button.get_item_text(index)
+	character_data.character_class = selected_class
 	_update_preview()
 	_update_class_description()
 
